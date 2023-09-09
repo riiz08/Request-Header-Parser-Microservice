@@ -24,6 +24,27 @@ app.get('/api/hello', function (req, res) {
   res.json({ greeting: 'hello API' });
 });
 
+app.get("/api/whoami", (req, res) => {
+  //MENDAPATKAN IP ADDRESS DARI REQUEST
+  const clientIp = req.ip;
+  
+  //MENDAPATKAN BAHASA 
+  const acceptLanguageHeader = req.get('Accept-Language');
+  const languages = acceptLanguageHeader.split(',');
+  const preferredLanguage = languages[0] + "," + languages[1]; // Bahasa pertama dan kedua di dalam daftar preferensi
+
+  //MENDAPATKAN SOFTWARE KLIEN
+  const software = req.get('User-Agent');
+
+
+
+  res.json({
+    ipaddress: clientIp,
+    language: preferredLanguage,
+    software: software
+  })
+})
+
 // listen for requests :)
 var listener = app.listen(process.env.PORT || 3000, function () {
   console.log('Your app is listening on port ' + listener.address().port);
